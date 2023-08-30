@@ -1,4 +1,5 @@
-# Movie App with Laravel
+# Movie App
+## laravel
 
 1. Run $- `composer install` for both front and back.
 2. Run $- `npm i` for both front and back.
