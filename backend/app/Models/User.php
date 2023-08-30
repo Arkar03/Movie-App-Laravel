@@ -34,7 +34,11 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-
+    public static function totalUser($role): int
+    {
+        $user = User::where('role', $role)->get();
+        return count($user);
+    }
     public function canAccessPanel(Panel $panel): bool
     {
         return $this->role > 0;
