@@ -1,0 +1,14 @@
+<?php
+
+namespace App\Service;
+
+use App\Models\User;
+
+class AdminService
+{
+    public function isAdmin(string $email)
+    {
+        $user =  User::where("email", $email)->first();
+        return $user->role > 0 ? true : false;
+    }
+}
