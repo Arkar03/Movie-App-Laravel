@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Http;
 class MoviesController extends Controller
 {
 
-    public $watchlists = [];
+    // public $watchlists = [];
 
     public function index()
     {

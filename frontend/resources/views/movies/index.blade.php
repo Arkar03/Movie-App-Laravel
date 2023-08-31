@@ -12,13 +12,14 @@
     {{-- checkout tester end --}}
     <div class="container pt-16">
         @if ($watchlists != [])
+        {{-- @dump($watchlists) --}}
             <div class="watchlist mb-20 px-20">
                 <h2 class="uppercase tracking-wider text-orange-400 text-lg font-semibold">
                     Watchlists
                 </h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
                     @foreach ($watchlists as $list)
-                        {{-- @dd($list['movie_id'][0]) --}}
+                        {{-- @dd($list) --}}
                         <div class="mt-8">
                             <a href="{{ route('movies.show', $list['movie_id'][0]) }}">
                                 <img src='http://image.tmdb.org/t/p/w500{{ $list['image'][0] }}' alt="poster"

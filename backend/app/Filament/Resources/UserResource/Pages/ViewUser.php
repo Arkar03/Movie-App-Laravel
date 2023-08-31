@@ -17,14 +17,5 @@ class ViewUser extends ViewRecord
             Actions\EditAction::make(),
         ];
     }
-    public static function infolist(Infolist $infolist): Infolist
-    {
-        return $infolist
-            ->schema([
-                TextEntry::make('name'),
-                TextEntry::make('email'),
-                TextEntry::make('notes')
-                    ->columnSpanFull(),
-            ]);
-    }
+    
 }

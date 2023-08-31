@@ -5,7 +5,7 @@
 1. Run $- `composer install` for both front and back.
 2. Run $- `npm i` for both front and back.
 3. Run $- `php artisan migrate`.
-4. Run $- `php artisan db:seed --class=MovieSeeder`
+4. Run $- `php artisan db:seed --seed=MovieSeeder`
 5. Run $- `php artisan serve`.
 
 ## Env Setup
