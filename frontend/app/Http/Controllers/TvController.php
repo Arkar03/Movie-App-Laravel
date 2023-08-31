@@ -18,15 +18,14 @@ class TvController extends Controller
         if (Auth::check()) {
             try {
                 $popularTv = Http::withToken(config('services.tmdb.token'))
-                    ->get('http://api.themoviedb.org/3/tv/popular?api_key=56fd71464778c111dcbc8f16b384cf2f')
+                    ->get('http://api.themoviedb.org/3/tv/popular?api_key=' . env('TMDB_TOKEN'))
                     ->json()['results'];
                 $topRatedTv = Http::withToken(config('services.tmdb.token'))
-                    ->get('http://api.themoviedb.org/3/tv/top_rated?api_key=56fd71464778c111dcbc8f16b384cf2f')
+                    ->get('http://api.themoviedb.org/3/tv/top_rated?api_key=' . env('TMDB_TOKEN'))
                     ->json()['results'];
                 $genres = Http::withToken(config('services.tmdb.token'))
-                    ->get('http://api.themoviedb.org/3/genre/tv/list?api_key=56fd71464778c111dcbc8f16b384cf2f')
+                    ->get('http://api.themoviedb.org/3/genre/tv/list?api_key=' . env('TMDB_TOKEN'))
                     ->json()['genres'];
-
             } catch (\Throwable $th) {
                 $popularTv = [];
                 $topRatedTv = [];
@@ -48,7 +47,7 @@ class TvController extends Controller
     {
         if (Auth::check()) {
             $tvshow = Http::withToken(config('services.tmdb.token'))
-                ->get("http://api.themoviedb.org/3/tv/$id?api_key=56fd71464778c111dcbc8f16b384cf2f&append_to_response=credits,videos,images")
+                ->get("http://api.themoviedb.org/3/tv/$id?api_key=" . env('TMDB_TOKEN') . "&append_to_response=credits,videos,images")
                 ->json();
             $viewModel = new TvShowViewModel($tvshow);
             return view('tv.show', $viewModel);

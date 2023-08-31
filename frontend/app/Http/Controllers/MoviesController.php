@@ -21,13 +21,13 @@ class MoviesController extends Controller
         if (Auth::check()) {
             try {
                 $popularMovies = Http::withToken(config('services.tmdb.token'))
-                    ->get('http://api.themoviedb.org/3/movie/popular?api_key=56fd71464778c111dcbc8f16b384cf2f')
+                    ->get('http://api.themoviedb.org/3/movie/popular?api_key='.env('TMDB_TOKEN'))
                     ->json()['results'];
                 $nowPlayingMovies = Http::withToken(config('services.tmdb.token'))
-                    ->get('http://api.themoviedb.org/3/movie/now_playing?api_key=56fd71464778c111dcbc8f16b384cf2f')
+                    ->get('http://api.themoviedb.org/3/movie/now_playing?api_key='.env('TMDB_TOKEN'))
                     ->json()['results'];
                 $genres = Http::withToken(config('services.tmdb.token'))
-                    ->get('http://api.themoviedb.org/3/genre/movie/list?api_key=56fd71464778c111dcbc8f16b384cf2f')
+                    ->get('http://api.themoviedb.org/3/genre/movie/list?api_key='.env('TMDB_TOKEN'))
                     ->json()['genres'];
                 $watchlistsids = DB::table('watchlists')->where('userId', Auth::user()->id)->pluck('movieId');
             } catch (\Throwable $th) {
@@ -72,8 +72,9 @@ class MoviesController extends Controller
     {
 
         if (Auth::check()) {
+
             $movie = Http::withToken(config('services.tmdb.token'))
-                ->get("http://api.themoviedb.org/3/movie/$id?api_key=56fd71464778c111dcbc8f16b384cf2f&append_to_response=credits,videos,images")
+                ->get("http://api.themoviedb.org/3/movie/$id?api_key=" . env('TMDB_TOKEN') . "&append_to_response=credits,videos,images")
                 ->json();
             $watched = Watchlist::where('movieId', $id)->first() ? true : false;
             // dd($watched);
@@ -91,7 +92,7 @@ class MoviesController extends Controller
         $lists = "";
         foreach ($mids as $mid) {
             $lists = Http::withToken(config('services.tmdb.token'))
-                ->get("http://api.themoviedb.org/3/movie/" . $mid['movieId'] . "?api_key=56fd71464778c111dcbc8f16b384cf2f&append_to_response=credits,videos,images")
+                ->get("http://api.themoviedb.org/3/movie/" . $mid['movieId'] . "?api_key=".env('TMDB_TOKEN')."&append_to_response=credits,videos,images")
                 ->json();
 
             $res = [$lists, $mid];

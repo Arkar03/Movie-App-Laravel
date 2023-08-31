@@ -22,7 +22,7 @@ class ActorsController extends Controller
 
             try {
                 $popularActors = Http::withToken(config('services.tmdb.token'))
-                    ->get('http://api.themoviedb.org/3/person/popular?api_key=56fd71464778c111dcbc8f16b384cf2f&page=' . $page)
+                    ->get('http://api.themoviedb.org/3/person/popular?api_key='.env('TMDB_TOKEN').'&page=' . $page)
                     ->json()['results'];
             } catch (\Throwable $th) {
                 $popularActors = [];
@@ -38,15 +38,15 @@ class ActorsController extends Controller
     public function show($id)
     {
         $actor = Http::withToken(config('services.tmdb.token'))
-            ->get("http://api.themoviedb.org/3/person/$id?api_key=56fd71464778c111dcbc8f16b384cf2f")
+            ->get("http://api.themoviedb.org/3/person/$id?api_key=".env('TMDB_TOKEN'))
             ->json();
 
         $social = Http::withToken(config('services.tmdb.token'))
-            ->get("http://api.themoviedb.org/3/person/$id/external_ids?api_key=56fd71464778c111dcbc8f16b384cf2f")
+            ->get("http://api.themoviedb.org/3/person/$id/external_ids?api_key=".env('TMDB_TOKEN'))
             ->json();
 
         $credits = Http::withToken(config('services.tmdb.token'))
-            ->get("http://api.themoviedb.org/3/person/$id/combined_credits?api_key=56fd71464778c111dcbc8f16b384cf2f")
+            ->get("http://api.themoviedb.org/3/person/$id/combined_credits?api_key=".env('TMDB_TOKEN'))
             ->json();
 
         $viewModel = new ActorViewModel($actor, $social, $credits);
