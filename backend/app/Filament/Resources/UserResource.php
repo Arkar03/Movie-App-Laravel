@@ -8,12 +8,17 @@ use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Illuminate\Support\Facades\Hash;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\Section;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Validation\Rules\Password;
 use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\UserResource\Pages\EditUser;
+use App\Filament\Resources\UserResource\Pages\CreateUser;
 use App\Filament\Resources\UserResource\RelationManagers;
 
 class UserResource extends Resource
@@ -26,11 +31,31 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name'),
-                TextInput::make('email'),
-                TextInput::make('password'),
-                TextInput::make('role')->hidden()->default(1),
+                Section::make('Create Admin')->schema([
+                    TextInput::make('name')->required(),
+                    TextInput::make('email')->required()->email()->unique(),
+                    TextInput::make('password')
+                        ->columnSpanFull()
+                        ->required()
+                        ->dehydrateStateUsing(fn ($state) => Hash::make($state))
+                        ->visible(fn ($livewire) => $livewire instanceof CreateUser)
+                        ->rule(Password::default()),
+                    TextInput::make('role')
+                        ->hidden()
+                        ->numeric()
+                        ->default(1),
+                ])->columns(2),
 
+                Section::make('New Password')->schema([
+                    TextInput::make('new_password')
+                        ->nullable()
+                        ->password()
+                        ->rule(Password::default()),
+                    TextInput::make('new_password_confirmation')
+                        ->password()
+                        ->same('new_password')
+                        ->requiredWith('new_password')
+                ])->visible(fn ($livewire) => $livewire instanceof EditUser)
             ]);
     }
 

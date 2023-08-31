@@ -2,8 +2,8 @@
 @extends('layouts.nav')
 
 @section('title', 'Show All Movies')
-
 @section('content')
+
     <div class="tv-info border-b border-gray-800">
         <div class="container mx-auto px-4 py-16 flex flex-col md:flex-row">
             <img src="{{ $tvshow['poster_path'] }}" alt="parasite-details" class="w-64 md:w-96 pl-10">
@@ -43,15 +43,17 @@
 
 
                     <!-- Modal toggle -->
-                    <button onclick="setSrc()" data-modal-target="defaultModal" data-modal-toggle="defaultModal"
-                        id="trailerButton"
-                        class="flex inline-flex items-center text-white-900 bg-yellow-600  text-gray-900 rounded font-semibold px-5 py-4 hover:bg-yellow-500 transition-ease-in-out duration-150"
-                        type="button">
-                        <span class="material-symbols-outlined">
-                            play_circle
-                        </span>
-                        <span class="ml-2">Play Trailer</span>
-                    </button>
+                    @if ($playable != null)
+                        <button onclick="setSrc()" data-modal-target="defaultModal" data-modal-toggle="defaultModal"
+                            id="trailerButton"
+                            class="flex inline-flex items-center text-white-900 bg-yellow-600  text-gray-900 rounded font-semibold px-5 py-4 hover:bg-yellow-500 transition-ease-in-out duration-150"
+                            type="button">
+                            <span class="material-symbols-outlined">
+                                play_circle
+                            </span>
+                            <span class="ml-2">Play Trailer</span>
+                        </button>
+                    @endif
 
                     <!-- Main modal -->
                     <div onclick="removeSrc()" id="defaultModal" tabindex="-1" aria-hidden="true"
@@ -116,15 +118,19 @@
 
 @endsection
 
-<script>
-    function removeSrc() {
-        var iframe = document.getElementById("ytvid");
-        iframe.src = "";
-    }
+@if ($playable != null)
+    <script>
+        function removeSrc() {
+            var iframe = document.getElementById("ytvid");
+            iframe.src = "";
+        }
 
-    function setSrc() {
-        var trailerButton = document.getElementById("trailerButton");
-        var iframe = document.getElementById("ytvid");
-        iframe.src = "{{ 'https://www.youtube.com/embed/' . $tvshow['videos']['results'][0]['key'] }}";
-    }
-</script>
+
+        function setSrc() {
+            var trailerButton = document.getElementById("trailerButton");
+            var iframe = document.getElementById("ytvid");
+            if ()
+                iframe.src = "{{ 'https://www.youtube.com/embed/' . $tvshow['videos']['results'][0]['key'] }}  }}";
+        }
+    </script>
+@endif

@@ -6,10 +6,14 @@ use Spatie\ViewModels\ViewModel;
 
 class TvShowViewModel extends ViewModel
 {
-    public $tvshow;
+    public $tvshow = true;
+    public $playable;
     public function __construct($tvshow)
     {
         $this->tvshow = $tvshow;
+        if (empty($tvshow['videos'])) {
+            $this->playable = false;
+        }
     }
     public function tvshow()
     {
@@ -21,6 +25,7 @@ class TvShowViewModel extends ViewModel
             'crew' => collect($this->tvshow['credits']['crew'])->take(2),
             'cast' => collect($this->tvshow['credits']['cast'])->take(5),
             'images' => collect($this->tvshow['images']['backdrops'])->take(9),
+            'playable' => $this->playable,
         ]);
     }
 }
