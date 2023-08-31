@@ -2,8 +2,9 @@
 
 namespace App\Filament\Resources\UserResource\Pages;
 
-use App\Filament\Resources\UserResource;
 use Filament\Actions;
+use Filament\Infolists\Infolist;
+use App\Filament\Resources\UserResource;
 use Filament\Resources\Pages\ViewRecord;
 
 class ViewUser extends ViewRecord
@@ -15,5 +16,15 @@ class ViewUser extends ViewRecord
         return [
             Actions\EditAction::make(),
         ];
+    }
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                TextEntry::make('name'),
+                TextEntry::make('email'),
+                TextEntry::make('notes')
+                    ->columnSpanFull(),
+            ]);
     }
 }
