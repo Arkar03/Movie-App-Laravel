@@ -30,12 +30,4 @@ class WatchlistController extends Controller
         Watchlist::where('movieId', $movieId)->delete($movieId);
         return redirect()->back();
     }
-    // public function getList()
-    // {
-    //     $model = new Watchlist;
-    //     $model->userId = Auth::id();
-    //     $lists = Watchlist::find($model->userId)->get()->toArray();
-
-    //     return $lists;
-    // }
 }
