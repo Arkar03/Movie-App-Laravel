@@ -20,7 +20,7 @@
             <li class="md:ml-6 mt-3 md:mt-0">
                 <a href="{{ route('actors.index') }}" class="hover:text-gray-300">Actors</a>
             </li>
-            <li class="md:ml-6 md:mt-0">
+            {{-- <li class="md:ml-6 md:mt-0">
                 <form action="/session" method="POST" class="mt-4">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <button type="submit" id="checkout-live-button"
@@ -31,7 +31,7 @@
                 {{-- <a href="{{ route('pro') }}">Upgrade to Pro++</a> --}}
             </li>
             <li class="md:ml-6 mt-3 md:mt-0">
-               
+
             </li>
         </ul>
 
